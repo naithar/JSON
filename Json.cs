@@ -18,6 +18,17 @@ using System.Text;
 
 namespace mapp.core.json {
 
+    public static class Extensions
+    {
+
+        internal static void AddRange<T, U>(this IDictionary<T, U> source, IDictionary<T, U> other)
+        {
+            foreach (var item in other)
+            {
+                source.Add(item.Key, item.Value);
+            }
+        }
+    }
 	public static class JsonExtensions {
 
 		public static JsonObject GetValueFromIndexPath(this IJsonIndexer json, params object[] indexPath) {
@@ -730,7 +741,7 @@ namespace mapp.core.json {
 					using (var streamReader = new StreamReader(this.streamBase,
 						Encoding.UTF8,
 						true,
-						GlobalVariables.ByteReadLength,
+						2048,
 						true)) {
 						this.Perform(streamReader);
 					}
